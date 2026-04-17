@@ -6,7 +6,7 @@ pipeline {
         stage('Clone') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/<your-username>/fastapi-cicd.git',
+                url: 'https://github.com/itschiku/fastapi-cicd.git'
                 credentialsId: 'github-creds'
             }
         }
