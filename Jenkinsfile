@@ -3,28 +3,16 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/itschiku/fastapi-cicd.git'
-                credentialsId: 'github-creds'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("fastapi-app")
-                }
+                sh 'docker build -t fastapi-app .'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
-                script {
-                    sh 'docker rm -f fastapi-container || true'
-                    sh 'docker run -d -p 8000:8000 --name fastapi-container fastapi-app'
-                }
+                sh 'docker rm -f fastapi-container || true'
+                sh 'docker run -d -p 8000:8000 --name fastapi-container fastapi-app'
             }
         }
     }
